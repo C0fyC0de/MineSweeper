@@ -83,49 +83,75 @@ public class MainActivityTwo extends Activity {
                     btn.setText(String.valueOf(i));
                 }
 
-                //oznaci kuteve
-                switch(i) {
-                    case 0:
-                        btn.setTag("K");
-                        break;
-                    case 7:
-                        btn.setTag("K");
-                        break;
-                    case 120:
-                        btn.setTag("K");
-                        break;
-                    case 127:
-                        btn.setTag("K");
-                        break;
+                //oznaci ljevi zid
+                if(i % 8 == 0) {
+                    btn.setTag("L");
+                    //btn.setText(String.valueOf("L")); //debug
                 }
-                //oznaci zidove
-                if(!"K".equals(btn.getTag())) {
-                    //oznaci ljevi zid
-                    if(i % 8 == 0) {
-                        btn.setTag("L");
-                        btn.setText(String.valueOf("L")); //debug
-                    }
-                    //oznaci desni zid
-                    if(!"L".equals(btn.getTag())) {
-                        if((i - 7) % 8 == 0) {
-                            btn.setTag("R");
-                            btn.setText(String.valueOf("R")); //debug
-                        }
+                //oznaci desni zid
+                if(!"L".equals(btn.getTag())) {
+                    if((i - 7) % 8 == 0) {
+                        btn.setTag("R");
+                        //btn.setText(String.valueOf("R")); //debug
                     }
                 }
                 //oznaci gornji zid
                 if(i > 0 && i < 7 && !"BOMB".equals(btn.getTag())) {
                     btn.setTag("G");
-                    btn.setText(String.valueOf("G")); //debug
+                    //btn.setText(String.valueOf("G")); //debug
                 }
                 //oznaci gornji zid
                 if(i > 120 && i < 127 && !"BOMB".equals(btn.getTag())) {
                     btn.setTag("D");
-                    btn.setText(String.valueOf("D")); //debug
+                    //btn.setText(String.valueOf("D")); //debug
+                }
+
+                //oznaci kuteve
+                switch(i) {
+                    case 0:
+                        btn.setTag("KGL");
+                        break;
+                    case 7:
+                        btn.setTag("KGD");
+                        break;
+                    case 120:
+                        btn.setTag("KDL");
+                        break;
+                    case 127:
+                        btn.setTag("KDD");
+                        break;
                 }
 
             }
 
+        }
+        for (int i = 0; i < gridLayout.getChildCount(); i++) {
+            Button btn = (Button) gridLayout.getChildAt(i);
+            //btn.setText(String.valueOf(i));
+            switch(i) {
+                case 0:
+                    int counter = 0;
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(1)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(8)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(9)).getTag())) {
+                        counter++;
+                    }
+                    btn.setTag(counter);
+                    break;
+                case 7:
+                    btn.setTag("KGD");
+                    break;
+                case 120:
+                    btn.setTag("KDL");
+                    break;
+                case 127:
+                    btn.setTag("KDD");
+                    break;
+            }
         }
     }
 
