@@ -62,13 +62,39 @@ public class MainActivityTwo extends Activity {
             button.setLayoutParams(params);
 
 
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Handle button click here
-                    button.setBackground(ContextCompat.getDrawable(MainActivityTwo.this, R.drawable.tileclicked));
-                    Toast.makeText(MainActivityTwo.this, "Button " + button.getTag() + " clicked!", Toast.LENGTH_SHORT).show();
+            //game logic
+            button.setOnClickListener(v -> {
+                // Handle button click here
+                switch((Integer) button.getTag()) {
+                    case 0:
+                        button.setBackground(ContextCompat.getDrawable(MainActivityTwo.this, R.drawable.tileclicked));
+                        break;
+                    case 1:
+                        button.setBackground(ContextCompat.getDrawable(MainActivityTwo.this, R.drawable.tile1));
+                        break;
+                    case 2:
+                        button.setBackground(ContextCompat.getDrawable(MainActivityTwo.this, R.drawable.tile2));
+                        break;
+                    case 3:
+                        button.setBackground(ContextCompat.getDrawable(MainActivityTwo.this, R.drawable.tile3));
+                        break;
+                    case 4:
+                        button.setBackground(ContextCompat.getDrawable(MainActivityTwo.this, R.drawable.tile4));
+                        break;
+                    case 5:
+                        button.setBackground(ContextCompat.getDrawable(MainActivityTwo.this, R.drawable.tile5));
+                        break;
+                    case 6:
+                        button.setBackground(ContextCompat.getDrawable(MainActivityTwo.this, R.drawable.tile6));
+                        break;
+                    case 7:
+                        button.setBackground(ContextCompat.getDrawable(MainActivityTwo.this, R.drawable.tile7));
+                        break;
+                    case 8:
+                        button.setBackground(ContextCompat.getDrawable(MainActivityTwo.this, R.drawable.tile8));
+                        break;
                 }
+                Toast.makeText(MainActivityTwo.this, "Button " + button.getTag() + " clicked!", Toast.LENGTH_SHORT).show();
             });
 
             // Add button to the GridLayout
@@ -78,11 +104,7 @@ public class MainActivityTwo extends Activity {
             Button btn = (Button) gridLayout.getChildAt(i);
 
             if (!"BOMB".equals(btn.getTag())) {
-                btn.setTag(i);
-                if(i == (Integer) btn.getTag()) {  //debug statement
-                    btn.setText(String.valueOf(i));
-                }
-
+                btn.setTag("N");
                 //oznaci ljevi zid
                 if(i % 8 == 0) {
                     btn.setTag("L");
@@ -125,32 +147,172 @@ public class MainActivityTwo extends Activity {
             }
 
         }
+        //postavi brojeve oko bombi
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
             Button btn = (Button) gridLayout.getChildAt(i);
             //btn.setText(String.valueOf(i));
-            switch(i) {
-                case 0:
-                    int counter = 0;
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(1)).getTag())) {
+            if (!"BOMB".equals(btn.getTag())) {
+                //postavi brojeve za kuteve
+                int counter = 0;
+                switch(i) {
+                    case 0:
+                        if("BOMB".equals(((Button) gridLayout.getChildAt(1)).getTag())) {
+                            counter++;
+                        }
+                        if("BOMB".equals(((Button) gridLayout.getChildAt(8)).getTag())) {
+                            counter++;
+                        }
+                        if("BOMB".equals(((Button) gridLayout.getChildAt(9)).getTag())) {
+                            counter++;
+                        }
+                        btn.setTag(counter);
+                        counter = 0;
+                        break;
+                    case 7:
+                        if("BOMB".equals(((Button) gridLayout.getChildAt(6)).getTag())) {
+                            counter++;
+                        }
+                        if("BOMB".equals(((Button) gridLayout.getChildAt(14)).getTag())) {
+                            counter++;
+                        }
+                        if("BOMB".equals(((Button) gridLayout.getChildAt(15)).getTag())) {
+                            counter++;
+                        }
+                        btn.setTag(counter);
+                        counter = 0;
+                        break;
+                    case 120:
+                        if("BOMB".equals(((Button) gridLayout.getChildAt(112)).getTag())) {
+                            counter++;
+                        }
+                        if("BOMB".equals(((Button) gridLayout.getChildAt(113)).getTag())) {
+                            counter++;
+                        }
+                        if("BOMB".equals(((Button) gridLayout.getChildAt(121)).getTag())) {
+                            counter++;
+                        }
+                        btn.setTag(counter);
+                        counter = 0;
+                        break;
+                    case 127:
+                        if("BOMB".equals(((Button) gridLayout.getChildAt(118)).getTag())) {
+                            counter++;
+                        }
+                        if("BOMB".equals(((Button) gridLayout.getChildAt(119)).getTag())) {
+                            counter++;
+                        }
+                        if("BOMB".equals(((Button) gridLayout.getChildAt(126)).getTag())) {
+                            counter++;
+                        }
+                        btn.setTag(counter);
+                        counter = 0;
+                        break;
+                }
+                //postavi brojeve oko bombi uz zid
+                if ("G".equals(btn.getTag())) {
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-1)).getTag())) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(8)).getTag())) {
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+1)).getTag())) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(9)).getTag())) {
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+7)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+8)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+9)).getTag())) {
                         counter++;
                     }
                     btn.setTag(counter);
-                    break;
-                case 7:
-                    btn.setTag("KGD");
-                    break;
-                case 120:
-                    btn.setTag("KDL");
-                    break;
-                case 127:
-                    btn.setTag("KDD");
-                    break;
+                    counter = 0;
+                }
+                if ("D".equals(btn.getTag())) {
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-1)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+1)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-7)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-8)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-9)).getTag())) {
+                        counter++;
+                    }
+                    btn.setTag(counter);
+                    counter = 0;
+                }
+                if ("L".equals(btn.getTag())) {
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-8)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-7)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+1)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+8)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+9)).getTag())) {
+                        counter++;
+                    }
+                    btn.setTag(counter);
+                    counter = 0;
+                }
+                if ("R".equals(btn.getTag())) {
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-9)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-8)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-1)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+7)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+8)).getTag())) {
+                        counter++;
+                    }
+                    btn.setTag(counter);
+                    counter = 0;
+                }
+                if ("N".equals(btn.getTag())) {
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-9)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-8)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-7)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-1)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+1)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+7)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+8)).getTag())) {
+                        counter++;
+                    }
+                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+9)).getTag())) {
+                        counter++;
+                    }
+                    btn.setTag(counter);
+                    counter = 0;
+                }
             }
         }
     }
