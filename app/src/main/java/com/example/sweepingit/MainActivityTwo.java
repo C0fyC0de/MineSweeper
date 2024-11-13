@@ -1,9 +1,9 @@
 package com.example.sweepingit;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.app.Activity;
@@ -17,11 +17,31 @@ import java.util.Random;
 import java.util.Set;
 
 public class MainActivityTwo extends Activity {
+
+    static class ButtonData {
+        String pos;
+        int value;
+        ButtonData(String pos, int value)
+        {
+            this.pos = pos;
+            this.value = value;
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitytwo_main);
 
+        //cache textures
+        final Drawable tileClicked = ContextCompat.getDrawable(this, R.drawable.tilejpgclicked);
+        final Drawable tile1 = ContextCompat.getDrawable(this, R.drawable.tilejpg1);
+        final Drawable tile2 = ContextCompat.getDrawable(this, R.drawable.tilejpg2);
+        final Drawable tile3 = ContextCompat.getDrawable(this, R.drawable.tilejpg3);
+        final Drawable tile4 = ContextCompat.getDrawable(this, R.drawable.tilejpg4);
+        final Drawable tile5 = ContextCompat.getDrawable(this, R.drawable.tilejpg5);
+        final Drawable tile6 = ContextCompat.getDrawable(this, R.drawable.tilejpg6);
+        final Drawable tile7 = ContextCompat.getDrawable(this, R.drawable.tilejpg7);
+        final Drawable tile8 = ContextCompat.getDrawable(this, R.drawable.tilejpg8);
         // Reference the GridLayout
         GridLayout gridLayout = findViewById(R.id.gridLayout);
 
@@ -41,15 +61,17 @@ public class MainActivityTwo extends Activity {
         // Set the total number of buttons
         for (int i = 0; i < 128; i++) {
             Button button = new Button(this);
+            button.setTag(new ButtonData("N", i));
             for (int number : randomNumbers) {
                 if (i == number) {
                     button.setText(String.valueOf("BOMB"));  // label buttons
-                    button.setTag("BOMB");
+                    //button.setTag("BOMB");
+                    button.setTag(new ButtonData("BOMB", 9));
                 }
             }
 
             // Set button background to borderless drawable
-            button.setBackground(ContextCompat.getDrawable(this, R.drawable.tile));
+            button.setBackground(ContextCompat.getDrawable(this, R.drawable.tilejpg));
 
             // Set button layout parameters with no margin
             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
@@ -64,83 +86,90 @@ public class MainActivityTwo extends Activity {
 
             //game logic
             button.setOnClickListener(v -> {
-                // Handle button click here
-                switch((Integer) button.getTag()) {
-                    case 0:
-                        button.setBackground(ContextCompat.getDrawable(MainActivityTwo.this, R.drawable.tileclicked));
-                        break;
-                    case 1:
-                        button.setBackground(ContextCompat.getDrawable(MainActivityTwo.this, R.drawable.tile1));
-                        break;
-                    case 2:
-                        button.setBackground(ContextCompat.getDrawable(MainActivityTwo.this, R.drawable.tile2));
-                        break;
-                    case 3:
-                        button.setBackground(ContextCompat.getDrawable(MainActivityTwo.this, R.drawable.tile3));
-                        break;
-                    case 4:
-                        button.setBackground(ContextCompat.getDrawable(MainActivityTwo.this, R.drawable.tile4));
-                        break;
-                    case 5:
-                        button.setBackground(ContextCompat.getDrawable(MainActivityTwo.this, R.drawable.tile5));
-                        break;
-                    case 6:
-                        button.setBackground(ContextCompat.getDrawable(MainActivityTwo.this, R.drawable.tile6));
-                        break;
-                    case 7:
-                        button.setBackground(ContextCompat.getDrawable(MainActivityTwo.this, R.drawable.tile7));
-                        break;
-                    case 8:
-                        button.setBackground(ContextCompat.getDrawable(MainActivityTwo.this, R.drawable.tile8));
-                        break;
+                Button btn = (Button) v;
+
+                ButtonData tags = (ButtonData) btn.getTag();
+                btn.setBackground(null);
+                if(tags != null) {
+                    Toast.makeText(this, "Šta si?: " + tags.pos + ", Indeks: " + tags.value, Toast.LENGTH_SHORT).show();
+                    // Handle the tile logic based on the tag
+                    switch (tags.value) {
+                        case 0:
+                            btn.setBackground(tileClicked); // Example tile
+                            break;
+                        case 1:
+                            btn.setBackground(tile1);
+                            break;
+                        case 2:
+                            btn.setBackground(tile2);
+                            break;
+                        case 3:
+                            btn.setBackground(tile3);
+                            break;
+                        case 4:
+                            btn.setBackground(tile4);
+                            break;
+                        case 5:
+                            btn.setBackground(tile5);
+                            break;
+                        case 6:
+                            btn.setBackground(tile6);
+                            break;
+                        case 7:
+                            btn.setBackground(tile7);
+                            break;
+                        case 8:
+                            btn.setBackground(tile8);
+                            break;
+                    }
                 }
-                Toast.makeText(MainActivityTwo.this, "Button " + button.getTag() + " clicked!", Toast.LENGTH_SHORT).show();
             });
+
 
             // Add button to the GridLayout
             gridLayout.addView(button);
         }
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
             Button btn = (Button) gridLayout.getChildAt(i);
-
-            if (!"BOMB".equals(btn.getTag())) {
-                btn.setTag("N");
+            ButtonData data = (ButtonData) btn.getTag();
+            if (data != null && !"BOMB".equals(data.pos)) {
+                btn.setTag(new ButtonData("N", i));
                 //oznaci ljevi zid
                 if(i % 8 == 0) {
-                    btn.setTag("L");
+                    btn.setTag(new ButtonData("L", i));
                     //btn.setText(String.valueOf("L")); //debug
                 }
                 //oznaci desni zid
-                if(!"L".equals(btn.getTag())) {
+                if(!"L".equals(data.pos)) {
                     if((i - 7) % 8 == 0) {
-                        btn.setTag("R");
+                        btn.setTag(new ButtonData("R", i));
                         //btn.setText(String.valueOf("R")); //debug
                     }
                 }
                 //oznaci gornji zid
-                if(i > 0 && i < 7 && !"BOMB".equals(btn.getTag())) {
-                    btn.setTag("G");
+                if(i > 0 && i < 7 && !"BOMB".equals(data.pos)) {
+                    btn.setTag(new ButtonData("G", i));
                     //btn.setText(String.valueOf("G")); //debug
                 }
                 //oznaci gornji zid
-                if(i > 120 && i < 127 && !"BOMB".equals(btn.getTag())) {
-                    btn.setTag("D");
+                if(i > 120 && i < 127 && !"BOMB".equals(data.pos)) {
+                    btn.setTag(new ButtonData("D", i));
                     //btn.setText(String.valueOf("D")); //debug
                 }
 
                 //oznaci kuteve
                 switch(i) {
                     case 0:
-                        btn.setTag("KGL");
+                        btn.setTag(new ButtonData("KGL", i));
                         break;
                     case 7:
-                        btn.setTag("KGD");
+                        btn.setTag(new ButtonData("KGD", i));
                         break;
                     case 120:
-                        btn.setTag("KDL");
+                        btn.setTag(new ButtonData("KDL", i));
                         break;
                     case 127:
-                        btn.setTag("KDD");
+                        btn.setTag(new ButtonData("KDD", i));
                         break;
                 }
 
@@ -150,167 +179,168 @@ public class MainActivityTwo extends Activity {
         //postavi brojeve oko bombi
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
             Button btn = (Button) gridLayout.getChildAt(i);
+            ButtonData data = (ButtonData) btn.getTag();
             //btn.setText(String.valueOf(i));
-            if (!"BOMB".equals(btn.getTag())) {
+            if (data != null && !"BOMB".equals(data.pos)) {
                 //postavi brojeve za kuteve
                 int counter = 0;
                 switch(i) {
                     case 0:
-                        if("BOMB".equals(((Button) gridLayout.getChildAt(1)).getTag())) {
+                        if (((ButtonData) ((Button) gridLayout.getChildAt(1)).getTag()).pos.equals("BOMB")) {
                             counter++;
                         }
-                        if("BOMB".equals(((Button) gridLayout.getChildAt(8)).getTag())) {
+                        if (((ButtonData) ((Button) gridLayout.getChildAt(8)).getTag()).pos.equals("BOMB")) {
                             counter++;
                         }
-                        if("BOMB".equals(((Button) gridLayout.getChildAt(9)).getTag())) {
+                        if (((ButtonData) ((Button) gridLayout.getChildAt(9)).getTag()).pos.equals("BOMB")) {
                             counter++;
                         }
-                        btn.setTag(counter);
+                        btn.setTag(new ButtonData(data.pos, counter));
                         counter = 0;
                         break;
                     case 7:
-                        if("BOMB".equals(((Button) gridLayout.getChildAt(6)).getTag())) {
+                        if (((ButtonData) ((Button) gridLayout.getChildAt(6)).getTag()).pos.equals("BOMB")) {
                             counter++;
                         }
-                        if("BOMB".equals(((Button) gridLayout.getChildAt(14)).getTag())) {
+                        if (((ButtonData) ((Button) gridLayout.getChildAt(14)).getTag()).pos.equals("BOMB")) {
                             counter++;
                         }
-                        if("BOMB".equals(((Button) gridLayout.getChildAt(15)).getTag())) {
+                        if (((ButtonData) ((Button) gridLayout.getChildAt(15)).getTag()).pos.equals("BOMB")) {
                             counter++;
                         }
-                        btn.setTag(counter);
+                        btn.setTag(new ButtonData(data.pos, counter));
                         counter = 0;
                         break;
                     case 120:
-                        if("BOMB".equals(((Button) gridLayout.getChildAt(112)).getTag())) {
+                        if (((ButtonData) ((Button) gridLayout.getChildAt(112)).getTag()).pos.equals("BOMB")) {
                             counter++;
                         }
-                        if("BOMB".equals(((Button) gridLayout.getChildAt(113)).getTag())) {
+                        if (((ButtonData) ((Button) gridLayout.getChildAt(113)).getTag()).pos.equals("BOMB")) {
                             counter++;
                         }
-                        if("BOMB".equals(((Button) gridLayout.getChildAt(121)).getTag())) {
+                        if (((ButtonData) ((Button) gridLayout.getChildAt(121)).getTag()).pos.equals("BOMB")) {
                             counter++;
                         }
-                        btn.setTag(counter);
+                        btn.setTag(new ButtonData(data.pos, counter));
                         counter = 0;
                         break;
                     case 127:
-                        if("BOMB".equals(((Button) gridLayout.getChildAt(118)).getTag())) {
+                        if (((ButtonData) ((Button) gridLayout.getChildAt(118)).getTag()).pos.equals("BOMB")) {
                             counter++;
                         }
-                        if("BOMB".equals(((Button) gridLayout.getChildAt(119)).getTag())) {
+                        if (((ButtonData) ((Button) gridLayout.getChildAt(119)).getTag()).pos.equals("BOMB")) {
                             counter++;
                         }
-                        if("BOMB".equals(((Button) gridLayout.getChildAt(126)).getTag())) {
+                        if (((ButtonData) ((Button) gridLayout.getChildAt(126)).getTag()).pos.equals("BOMB")) {
                             counter++;
                         }
-                        btn.setTag(counter);
+                        btn.setTag(new ButtonData(data.pos, counter));
                         counter = 0;
                         break;
                 }
                 //postavi brojeve oko bombi uz zid
-                if ("G".equals(btn.getTag())) {
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-1)).getTag())) {
+                if ("G".equals(data.pos)) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i-1)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+1)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i+1)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+7)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i+7)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+8)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i+8)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+9)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i+9)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    btn.setTag(counter);
+                    btn.setTag(new ButtonData(data.pos, counter));
                     counter = 0;
                 }
-                if ("D".equals(btn.getTag())) {
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-1)).getTag())) {
+                if ("D".equals(data.pos)) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i-1)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+1)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i+1)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-7)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i-7)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-8)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i-8)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-9)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i-9)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    btn.setTag(counter);
+                    btn.setTag(new ButtonData(data.pos, counter));
                     counter = 0;
                 }
-                if ("L".equals(btn.getTag())) {
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-8)).getTag())) {
+                if ("L".equals(data.pos)) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i-8)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-7)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i-7)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+1)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i+1)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+8)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i+8)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+9)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i+9)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    btn.setTag(counter);
+                    btn.setTag(new ButtonData(data.pos, counter));
                     counter = 0;
                 }
-                if ("R".equals(btn.getTag())) {
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-9)).getTag())) {
+                if ("R".equals(data.pos)) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i-9)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-8)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i-8)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-1)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i-1)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+7)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i+7)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+8)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i+8)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    btn.setTag(counter);
+                    btn.setTag(new ButtonData(data.pos, counter));
                     counter = 0;
                 }
-                if ("N".equals(btn.getTag())) {
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-9)).getTag())) {
+                if ("N".equals(data.pos)) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i-9)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-8)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i-8)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-7)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i-7)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i-1)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i-1)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+1)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i+1)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+7)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i+7)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+8)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i+8)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    if("BOMB".equals(((Button) gridLayout.getChildAt(i+9)).getTag())) {
+                    if (((ButtonData) ((Button) gridLayout.getChildAt(i+9)).getTag()).pos.equals("BOMB")) {
                         counter++;
                     }
-                    btn.setTag(counter);
+                    btn.setTag(new ButtonData(data.pos, counter));
                     counter = 0;
                 }
             }
