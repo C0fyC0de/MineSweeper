@@ -31,8 +31,8 @@ public class MainActivity extends Activity {
 
     public void callSecondActivity(View view) {
         Intent i = new Intent(getApplicationContext(), MainActivityTwo.class);
-        i.putExtra("Value1", "Android By Javatpoint");
-        i.putExtra("Value2", "Simple Tutorial");
+        i.putExtra("Value1", "awawa");
+        i.putExtra("Value2", "ssssss");
         startActivity(i);
     }
 
