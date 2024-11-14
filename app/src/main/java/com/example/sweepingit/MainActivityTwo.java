@@ -129,7 +129,7 @@ public class MainActivityTwo extends Activity {
                     // Handle the tile logic based on the tag
                     switch (tags.value) {
                         case 0:
-                            btn.setBackground(tileClicked); // Example tile
+                            btn.setBackground(tileClicked);
                             switch(tags.pos) {
                                 case "KGL":
                                     if (((ButtonData) ((Button) gridLayout.getChildAt(1)).getTag()).value != 9) {
@@ -232,8 +232,82 @@ public class MainActivityTwo extends Activity {
                                     }
                                     break;
                                 case "L":
+                                    if (((ButtonData) ((Button) gridLayout.getChildAt(tags.index-8)).getTag()).value != 9) {
+                                        Button btn1 = (Button) gridLayout.getChildAt(tags.index-8);
+                                        postavipozadinu(tags.index-8, btn1, tags, tileClicked, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8);
+                                    }
+                                    if (((ButtonData) ((Button) gridLayout.getChildAt(tags.index-7)).getTag()).value != 9) {
+                                        Button btn1 = (Button) gridLayout.getChildAt(tags.index-7);
+                                        postavipozadinu(tags.index-7, btn1, tags, tileClicked, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8);
+                                    }
+                                    if (((ButtonData) ((Button) gridLayout.getChildAt(tags.index+1)).getTag()).value != 9) {
+                                        Button btn1 = (Button) gridLayout.getChildAt(tags.index+1);
+                                        postavipozadinu(tags.index+1, btn1, tags, tileClicked, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8);
+                                    }
+                                    if (((ButtonData) ((Button) gridLayout.getChildAt(tags.index+8)).getTag()).value != 9) {
+                                        Button btn1 = (Button) gridLayout.getChildAt(tags.index+8);
+                                        postavipozadinu(tags.index+8, btn1, tags, tileClicked, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8);
+                                    }
+                                    if (((ButtonData) ((Button) gridLayout.getChildAt(tags.index+9)).getTag()).value != 9) {
+                                        Button btn1 = (Button) gridLayout.getChildAt(tags.index+9);
+                                        postavipozadinu(tags.index+9, btn1, tags, tileClicked, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8);
+                                    }
                                     break;
                                 case "R":
+                                    if (((ButtonData) ((Button) gridLayout.getChildAt(tags.index-9)).getTag()).value != 9) {
+                                        Button btn1 = (Button) gridLayout.getChildAt(tags.index-9);
+                                        postavipozadinu(tags.index-9, btn1, tags, tileClicked, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8);
+                                    }
+                                    if (((ButtonData) ((Button) gridLayout.getChildAt(tags.index-8)).getTag()).value != 9) {
+                                        Button btn1 = (Button) gridLayout.getChildAt(tags.index-8);
+                                        postavipozadinu(tags.index-8, btn1, tags, tileClicked, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8);
+                                    }
+                                    if (((ButtonData) ((Button) gridLayout.getChildAt(tags.index-1)).getTag()).value != 9) {
+                                        Button btn1 = (Button) gridLayout.getChildAt(tags.index-1);
+                                        postavipozadinu(tags.index-1, btn1, tags, tileClicked, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8);
+                                    }
+                                    if (((ButtonData) ((Button) gridLayout.getChildAt(tags.index+7)).getTag()).value != 9) {
+                                        Button btn1 = (Button) gridLayout.getChildAt(tags.index+7);
+                                        postavipozadinu(tags.index+7, btn1, tags, tileClicked, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8);
+                                    }
+                                    if (((ButtonData) ((Button) gridLayout.getChildAt(tags.index+8)).getTag()).value != 9) {
+                                        Button btn1 = (Button) gridLayout.getChildAt(tags.index+8);
+                                        postavipozadinu(tags.index+8, btn1, tags, tileClicked, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8);
+                                    }
+                                    break;
+                                case "N":
+                                    if (((ButtonData) ((Button) gridLayout.getChildAt(tags.index-9)).getTag()).value != 9) {
+                                        Button btn1 = (Button) gridLayout.getChildAt(tags.index-9);
+                                        postavipozadinu(tags.index-9, btn1, tags, tileClicked, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8);
+                                    }
+                                    if (((ButtonData) ((Button) gridLayout.getChildAt(tags.index-8)).getTag()).value != 9) {
+                                        Button btn1 = (Button) gridLayout.getChildAt(tags.index-8);
+                                        postavipozadinu(tags.index-8, btn1, tags, tileClicked, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8);
+                                    }
+                                    if (((ButtonData) ((Button) gridLayout.getChildAt(tags.index-7)).getTag()).value != 9) {
+                                        Button btn1 = (Button) gridLayout.getChildAt(tags.index-7);
+                                        postavipozadinu(tags.index-7, btn1, tags, tileClicked, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8);
+                                    }
+                                    if (((ButtonData) ((Button) gridLayout.getChildAt(tags.index-1)).getTag()).value != 9) {
+                                        Button btn1 = (Button) gridLayout.getChildAt(tags.index-1);
+                                        postavipozadinu(tags.index-1, btn1, tags, tileClicked, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8);
+                                    }
+                                    if (((ButtonData) ((Button) gridLayout.getChildAt(tags.index+1)).getTag()).value != 9) {
+                                        Button btn1 = (Button) gridLayout.getChildAt(tags.index+1);
+                                        postavipozadinu(tags.index+1, btn1, tags, tileClicked, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8);
+                                    }
+                                    if (((ButtonData) ((Button) gridLayout.getChildAt(tags.index+7)).getTag()).value != 9) {
+                                        Button btn1 = (Button) gridLayout.getChildAt(tags.index+7);
+                                        postavipozadinu(tags.index+7, btn1, tags, tileClicked, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8);
+                                    }
+                                    if (((ButtonData) ((Button) gridLayout.getChildAt(tags.index+8)).getTag()).value != 9) {
+                                        Button btn1 = (Button) gridLayout.getChildAt(tags.index+8);
+                                        postavipozadinu(tags.index+8, btn1, tags, tileClicked, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8);
+                                    }
+                                    if (((ButtonData) ((Button) gridLayout.getChildAt(tags.index+9)).getTag()).value != 9) {
+                                        Button btn1 = (Button) gridLayout.getChildAt(tags.index+9);
+                                        postavipozadinu(tags.index+9, btn1, tags, tileClicked, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8);
+                                    }
                                     break;
                             }
                             break;
