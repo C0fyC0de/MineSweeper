@@ -7,6 +7,34 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!-- Container for navigation buttons -->
+    <LinearLayout
+        android:id="@+id/navigationContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:background="@drawable/linear_layout_edges"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Example buttons for navigation -->
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button 1" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button 2" />
+    </LinearLayout>
+
+
+    <!-- GridLayout adjusted to be below the navigation container -->
     <GridLayout
         android:id="@+id/gridLayout"
         android:layout_width="0dp"
@@ -14,15 +42,9 @@
         android:layout_margin="0dp"
         android:columnCount="8"
         android:rowCount="16"
+        app:layout_constraintTop_toBottomOf="@id/navigationContainer"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <!-- The buttons will be added programmatically in MainActivity -->
-
-    </GridLayout>
-
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

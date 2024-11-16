@@ -36,7 +36,7 @@ public class MainActivityTwo extends Activity {
         ButtonData tags = (ButtonData) btn.getTag();
         if(!tags.pressed) {
             btn.setBackground(null);
-            Toast.makeText(this, "Slovo: " + tags.pos + ", Vrijednost: " + tags.value + ", Index: " + tags.index + ", Boolean: " + tags.pressed, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Slovo: " + tags.pos + ", Vrijednost: " + tags.value + ", Index: " + tags.index + ", Boolean: " + tags.pressed, Toast.LENGTH_SHORT).show();
             btn.setBackground(spriteArray[tags.value]);
             tags.pressed = true;
             if(tags.value == 0)
