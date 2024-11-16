@@ -14,27 +14,25 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="8dp"
+        android:gravity="center"
         android:background="@drawable/linear_layout_edges"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Example buttons for navigation -->
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button 1" />
-
         <Button
             android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button 2" />
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:text=""
+            app:layout_constraintWidth_default="wrap"
+            app:layout_constraintHeight_default="wrap"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
     </LinearLayout>
-
-
-    <!-- GridLayout adjusted to be below the navigation container -->
     <GridLayout
         android:id="@+id/gridLayout"
         android:layout_width="0dp"

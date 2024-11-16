@@ -113,7 +113,8 @@ public class MainActivityTwo extends Activity {
         Drawable[] spriteArray = {ContextCompat.getDrawable(this, R.drawable.tilejpgclicked), ContextCompat.getDrawable(this, R.drawable.tilejpg1), ContextCompat.getDrawable(this, R.drawable.tilejpg2), ContextCompat.getDrawable(this, R.drawable.tilejpg3), ContextCompat.getDrawable(this, R.drawable.tilejpg4), ContextCompat.getDrawable(this, R.drawable.tilejpg5), ContextCompat.getDrawable(this, R.drawable.tilejpg6), ContextCompat.getDrawable(this, R.drawable.tilejpg7), ContextCompat.getDrawable(this, R.drawable.tilejpg8), ContextCompat.getDrawable(this, R.drawable.tilebombexploded)};
         // Reference the GridLayout
         GridLayout gridLayout = findViewById(R.id.gridLayout);
-
+        Button smileybtn = findViewById(R.id.button2);
+        smileybtn.setBackground(ContextCompat.getDrawable(this, R.drawable.tilesmiley));
         // Ensure no padding in GridLayout
         gridLayout.setPadding(0, 0, 0, 0);
 
