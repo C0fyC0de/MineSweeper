@@ -1,5 +1,6 @@
 package com.example.sweepingit;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -102,6 +103,18 @@ public class MainActivityTwo extends Activity {
                         break;
                 }
             }
+            else if(tags.value == 9) {
+                tags.pos = "B";
+                for (int i = 0; i < gridLayout.getChildCount(); i++) {
+                    Button btn1 = (Button) gridLayout.getChildAt(i);
+                    ButtonData data = (ButtonData) btn1.getTag();
+                    data.pressed = true;
+                    if("BOMB".equals(data.pos)) {
+                        Toast.makeText(this, "Slovo: " + data.pos, Toast.LENGTH_SHORT).show();
+                        btn1.setBackground(ContextCompat.getDrawable(this, R.drawable.tilebomb));
+                    }
+                }
+            }
         }
     }
     @Override
@@ -118,7 +131,11 @@ public class MainActivityTwo extends Activity {
         // Ensure no padding in GridLayout
         gridLayout.setPadding(0, 0, 0, 0);
 
-
+        smileybtn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MainActivityTwo.class);
+            finish(); // Finish the current activity
+            startActivity(intent); // Start the activity again
+        });
 
         int[] randomNumbers = generateUniqueRandomNumbers(19, 0, 128);
         Arrays.sort(randomNumbers);
@@ -162,6 +179,17 @@ public class MainActivityTwo extends Activity {
                 if(tags != null) {
                     //Toast.makeText(this, "Slovo: " + tags.pos + ", Vrijednost: " + tags.value + ", Index: " + tags.index + ", Boolean: " + tags.pressed, Toast.LENGTH_SHORT).show();
                     // Handle the tile logic based on the tag
+                    if(!tags.pressed) {
+                        if(tags.value == 0) {
+                            smileybtn.setBackground(ContextCompat.getDrawable(this, R.drawable.tilesmiley));
+                        }
+                        else if (tags.value != 9) {
+                            smileybtn.setBackground(ContextCompat.getDrawable(this, R.drawable.tilenervoussmiley));
+                        }
+                        else {
+                            smileybtn.setBackground(ContextCompat.getDrawable(this, R.drawable.tiledeath2));
+                        }
+                    }
                     recursiveDiscovery(tags.index, spriteArray, gridLayout);
                 }
             });
