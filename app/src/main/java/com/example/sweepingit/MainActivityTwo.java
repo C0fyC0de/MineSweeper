@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivityTwo extends Activity {
 
@@ -32,10 +33,12 @@ public class MainActivityTwo extends Activity {
             this.pressed = pressed;
         }
     }
-    void recursiveDiscovery(int index, Drawable[] spriteArray, GridLayout gridLayout) {
+    void recursiveDiscovery(int index, Drawable[] spriteArray, GridLayout gridLayout, AtomicInteger pressedTiles) {
         Button btn = (Button) gridLayout.getChildAt(index);
         ButtonData tags = (ButtonData) btn.getTag();
         if(!tags.pressed) {
+            pressedTiles.getAndDecrement();
+            Log.d("PRITISNUTE TIPKE", pressedTiles + " ");
             btn.setBackground(null);
             //Toast.makeText(this, "Slovo: " + tags.pos + ", Vrijednost: " + tags.value + ", Index: " + tags.index + ", Boolean: " + tags.pressed, Toast.LENGTH_SHORT).show();
             btn.setBackground(spriteArray[tags.value]);
@@ -44,62 +47,62 @@ public class MainActivityTwo extends Activity {
             {
                 switch(tags.pos) {
                     case "N":
-                        recursiveDiscovery(index-9, spriteArray, gridLayout);
-                        recursiveDiscovery(index-8, spriteArray, gridLayout);
-                        recursiveDiscovery(index-7, spriteArray, gridLayout);
-                        recursiveDiscovery(index-1, spriteArray, gridLayout);
-                        recursiveDiscovery(index+1, spriteArray, gridLayout);
-                        recursiveDiscovery(index+7, spriteArray, gridLayout);
-                        recursiveDiscovery(index+8, spriteArray, gridLayout);
-                        recursiveDiscovery(index+9, spriteArray, gridLayout);
+                        recursiveDiscovery(index-9, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index-8, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index-7, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index-1, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index+1, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index+7, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index+8, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index+9, spriteArray, gridLayout, pressedTiles);
                         break;
                     case "G":
-                        recursiveDiscovery(index-1, spriteArray, gridLayout);
-                        recursiveDiscovery(index+1, spriteArray, gridLayout);
-                        recursiveDiscovery(index+7, spriteArray, gridLayout);
-                        recursiveDiscovery(index+8, spriteArray, gridLayout);
-                        recursiveDiscovery(index+9, spriteArray, gridLayout);
+                        recursiveDiscovery(index-1, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index+1, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index+7, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index+8, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index+9, spriteArray, gridLayout, pressedTiles);
                         break;
                     case "D":
-                        recursiveDiscovery(index-1, spriteArray, gridLayout);
-                        recursiveDiscovery(index+1, spriteArray, gridLayout);
-                        recursiveDiscovery(index-7, spriteArray, gridLayout);
-                        recursiveDiscovery(index-8, spriteArray, gridLayout);
-                        recursiveDiscovery(index-9, spriteArray, gridLayout);
+                        recursiveDiscovery(index-1, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index+1, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index-7, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index-8, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index-9, spriteArray, gridLayout, pressedTiles);
                         break;
                     case "L":
-                        recursiveDiscovery(index-8, spriteArray, gridLayout);
-                        recursiveDiscovery(index-7, spriteArray, gridLayout);
-                        recursiveDiscovery(index+1, spriteArray, gridLayout);
-                        recursiveDiscovery(index+8, spriteArray, gridLayout);
-                        recursiveDiscovery(index+9, spriteArray, gridLayout);
+                        recursiveDiscovery(index-8, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index-7, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index+1, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index+8, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index+9, spriteArray, gridLayout, pressedTiles);
                         break;
                     case "R":
-                        recursiveDiscovery(index+8, spriteArray, gridLayout);
-                        recursiveDiscovery(index+7, spriteArray, gridLayout);
-                        recursiveDiscovery(index-1, spriteArray, gridLayout);
-                        recursiveDiscovery(index-8, spriteArray, gridLayout);
-                        recursiveDiscovery(index-9, spriteArray, gridLayout);
+                        recursiveDiscovery(index+8, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index+7, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index-1, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index-8, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(index-9, spriteArray, gridLayout, pressedTiles);
                         break;
                     case "KGL":
-                        recursiveDiscovery(1, spriteArray, gridLayout);
-                        recursiveDiscovery(8, spriteArray, gridLayout);
-                        recursiveDiscovery(9, spriteArray, gridLayout);
+                        recursiveDiscovery(1, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(8, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(9, spriteArray, gridLayout, pressedTiles);
                         break;
                     case "KGD":
-                        recursiveDiscovery(6, spriteArray, gridLayout);
-                        recursiveDiscovery(14, spriteArray, gridLayout);
-                        recursiveDiscovery(15, spriteArray, gridLayout);
+                        recursiveDiscovery(6, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(14, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(15, spriteArray, gridLayout, pressedTiles);
                         break;
                     case "KDL":
-                        recursiveDiscovery(112, spriteArray, gridLayout);
-                        recursiveDiscovery(113, spriteArray, gridLayout);
-                        recursiveDiscovery(121, spriteArray, gridLayout);
+                        recursiveDiscovery(112, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(113, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(121, spriteArray, gridLayout, pressedTiles);
                         break;
                     case "KDD":
-                        recursiveDiscovery(118, spriteArray, gridLayout);
-                        recursiveDiscovery(119, spriteArray, gridLayout);
-                        recursiveDiscovery(126, spriteArray, gridLayout);
+                        recursiveDiscovery(118, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(119, spriteArray, gridLayout, pressedTiles);
+                        recursiveDiscovery(126, spriteArray, gridLayout, pressedTiles);
                         break;
                 }
             }
@@ -115,13 +118,25 @@ public class MainActivityTwo extends Activity {
                     }
                 }
             }
+            else if(pressedTiles.get() < 1) {
+                for (int i = 0; i < gridLayout.getChildCount(); i++) {
+                    Button btn1 = (Button) gridLayout.getChildAt(i);
+                    ButtonData data = (ButtonData) btn1.getTag();
+                    data.pressed = true;
+                    if("BOMB".equals(data.pos)) {
+                        Toast.makeText(this, "Slovo: " + data.pos, Toast.LENGTH_SHORT).show();
+                        btn1.setBackground(ContextCompat.getDrawable(this, R.drawable.flaggedmine));
+                    }
+                }
+            }
         }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitytwo_main);
-
+        int bombCounter = 0;
+        AtomicInteger pressedTiles = new AtomicInteger(128);
         //cache textures
         Drawable[] spriteArray = {ContextCompat.getDrawable(this, R.drawable.tilejpgclicked), ContextCompat.getDrawable(this, R.drawable.tilejpg1), ContextCompat.getDrawable(this, R.drawable.tilejpg2), ContextCompat.getDrawable(this, R.drawable.tilejpg3), ContextCompat.getDrawable(this, R.drawable.tilejpg4), ContextCompat.getDrawable(this, R.drawable.tilejpg5), ContextCompat.getDrawable(this, R.drawable.tilejpg6), ContextCompat.getDrawable(this, R.drawable.tilejpg7), ContextCompat.getDrawable(this, R.drawable.tilejpg8), ContextCompat.getDrawable(this, R.drawable.tilebombexploded)};
         // Reference the GridLayout
@@ -137,14 +152,15 @@ public class MainActivityTwo extends Activity {
             startActivity(intent); // Start the activity again
         });
 
-        int[] randomNumbers = generateUniqueRandomNumbers(19, 0, 128);
+        int[] randomNumbers = generateUniqueRandomNumbers(19, 0, 127);
         Arrays.sort(randomNumbers);
         // Print the generated array
         for (int number : randomNumbers) {
             Log.d("activityTwo", number + " ");
         }
 
-
+        bombCounter = randomNumbers.length;
+        pressedTiles.set(pressedTiles.get() - bombCounter);
         // Set the total number of buttons
         for (int i = 0; i < 128; i++) {
             Button button = new Button(this);
@@ -190,7 +206,10 @@ public class MainActivityTwo extends Activity {
                             smileybtn.setBackground(ContextCompat.getDrawable(this, R.drawable.tiledeath2));
                         }
                     }
-                    recursiveDiscovery(tags.index, spriteArray, gridLayout);
+                    recursiveDiscovery(tags.index, spriteArray, gridLayout, pressedTiles);
+                    if (pressedTiles.get() < 1) {
+                        smileybtn.setBackground(ContextCompat.getDrawable(this, R.drawable.smiley_cool));
+                    }
                 }
             });
             // Add button to the GridLayout
