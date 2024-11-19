@@ -113,7 +113,7 @@ public class MainActivityTwo extends Activity {
                     ButtonData data = (ButtonData) btn1.getTag();
                     data.pressed = true;
                     if("BOMB".equals(data.pos)) {
-                        Toast.makeText(this, "Slovo: " + data.pos, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(this, "Slovo: " + data.pos, Toast.LENGTH_SHORT).show();
                         btn1.setBackground(ContextCompat.getDrawable(this, R.drawable.tilebomb));
                     }
                 }
@@ -124,7 +124,7 @@ public class MainActivityTwo extends Activity {
                     ButtonData data = (ButtonData) btn1.getTag();
                     data.pressed = true;
                     if("BOMB".equals(data.pos)) {
-                        Toast.makeText(this, "Slovo: " + data.pos, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(this, "Slovo: " + data.pos, Toast.LENGTH_SHORT).show();
                         btn1.setBackground(ContextCompat.getDrawable(this, R.drawable.flaggedmine));
                     }
                 }
@@ -147,12 +147,28 @@ public class MainActivityTwo extends Activity {
 
         Button flagbtn = findViewById(R.id.button3);
         flagbtn.setBackground(ContextCompat.getDrawable(this, R.drawable.flagtilenotclicked));
+        flagbtn.setTag(0);
+        Drawable backgroundCheck = ContextCompat.getDrawable(this, R.drawable.flag);
+        Drawable backgroundCheck2 = ContextCompat.getDrawable(this, R.drawable.tilejpg);
 
-        Button flagcog = findViewById(R.id.button4);
-        flagcog.setBackground(ContextCompat.getDrawable(this, R.drawable.tilecog));
+        Button cogbtn = findViewById(R.id.button4);
+        cogbtn.setBackground(ContextCompat.getDrawable(this, R.drawable.tilecog));
 
         // Ensure no padding in GridLayout
         gridLayout.setPadding(0, 0, 0, 0);
+
+        flagbtn.setOnClickListener(v -> {
+            if((int) flagbtn.getTag() == 0) {
+                flagbtn.setBackground(null);
+                flagbtn.setBackground(ContextCompat.getDrawable(this, R.drawable.flagtileclicked));
+                flagbtn.setTag(1);
+            }
+            else if((int) flagbtn.getTag() == 1) {
+                flagbtn.setBackground(null);
+                flagbtn.setBackground(ContextCompat.getDrawable(this, R.drawable.flagtilenotclicked));
+                flagbtn.setTag(0);
+            }
+        });
 
         smileybtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, MainActivityTwo.class);
@@ -175,7 +191,7 @@ public class MainActivityTwo extends Activity {
             button.setTag(new ButtonData("N", i, i, false));
             for (int number : randomNumbers) {
                 if (i == number) {
-                    button.setText(String.valueOf("BOMB"));  // label buttons
+                    //button.setText(String.valueOf("BOMB"));  // label buttons
                     //button.setTag("BOMB");
                     button.setTag(new ButtonData("BOMB", 9, i, false));
                 }
@@ -203,18 +219,30 @@ public class MainActivityTwo extends Activity {
                 if(tags != null) {
                     //Toast.makeText(this, "Slovo: " + tags.pos + ", Vrijednost: " + tags.value + ", Index: " + tags.index + ", Boolean: " + tags.pressed, Toast.LENGTH_SHORT).show();
                     // Handle the tile logic based on the tag
-                    if(!tags.pressed) {
-                        if(tags.value == 0) {
-                            smileybtn.setBackground(ContextCompat.getDrawable(this, R.drawable.tilesmiley));
+                    if((int) flagbtn.getTag() == 1) {
+                        if(tags.pressed && backgroundCheck.getConstantState().equals(btn.getBackground().getConstantState())) {
+                            btn.setBackground(ContextCompat.getDrawable(this, R.drawable.tilejpg));
+                            tags.pressed = false;
                         }
-                        else if (tags.value != 9) {
-                            smileybtn.setBackground(ContextCompat.getDrawable(this, R.drawable.tilenervoussmiley));
-                        }
-                        else {
-                            smileybtn.setBackground(ContextCompat.getDrawable(this, R.drawable.tiledeath2));
+                        else if(!tags.pressed && backgroundCheck2.getConstantState().equals(btn.getBackground().getConstantState())){
+                            btn.setBackground(ContextCompat.getDrawable(this, R.drawable.flag));
+                            tags.pressed = true;
                         }
                     }
-                    recursiveDiscovery(tags.index, spriteArray, gridLayout, pressedTiles);
+                    else {
+                        if(!tags.pressed) {
+                            if(tags.value == 0) {
+                                smileybtn.setBackground(ContextCompat.getDrawable(this, R.drawable.tilesmiley));
+                            }
+                            else if (tags.value != 9) {
+                                smileybtn.setBackground(ContextCompat.getDrawable(this, R.drawable.tilenervoussmiley));
+                            }
+                            else {
+                                smileybtn.setBackground(ContextCompat.getDrawable(this, R.drawable.tiledeath2));
+                            }
+                        }
+                        recursiveDiscovery(tags.index, spriteArray, gridLayout, pressedTiles);
+                    }
                     if (pressedTiles.get() < 1) {
                         smileybtn.setBackground(ContextCompat.getDrawable(this, R.drawable.smiley_cool));
                     }
