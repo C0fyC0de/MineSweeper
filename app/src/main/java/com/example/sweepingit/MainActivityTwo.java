@@ -191,7 +191,7 @@ public class MainActivityTwo extends Activity {
             button.setTag(new ButtonData("N", i, i, false));
             for (int number : randomNumbers) {
                 if (i == number) {
-                    //button.setText(String.valueOf("BOMB"));  // label buttons
+                    button.setText(String.valueOf("BOMB"));  // label buttons
                     //button.setTag("BOMB");
                     button.setTag(new ButtonData("BOMB", 9, i, false));
                 }

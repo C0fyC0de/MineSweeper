@@ -31,7 +31,25 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="0.5" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/timerbackgroundandedge"
+            android:gravity="center"
+            android:text="000"
+            android:textAlignment="center"
+            android:textColor="#FE0000"
+            android:fontFamily="@font/dseg7"
+            android:textSize="38sp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5" />
 
         <!-- Center Button -->
         <Button
@@ -44,7 +62,25 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="0.5" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/timerbackgroundandedge"
+            android:gravity="center"
+            android:text="000"
+            android:textAlignment="center"
+            android:textColor="#FE0000"
+            android:fontFamily="@font/dseg7"
+            android:textSize="38sp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5" />
 
         <!-- Right Button -->
         <Button
