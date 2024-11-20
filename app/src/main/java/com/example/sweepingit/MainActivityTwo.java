@@ -8,7 +8,7 @@ import android.view.Gravity;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.app.Activity;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
@@ -136,6 +136,10 @@ public class MainActivityTwo extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitytwo_main);
         int bombCounter = 0;
+
+        TextView flagTextView = findViewById(R.id.textView);
+        TextView timeTextView = findViewById(R.id.textView2);
+
         AtomicInteger pressedTiles = new AtomicInteger(128);
         //cache textures
         Drawable[] spriteArray = {ContextCompat.getDrawable(this, R.drawable.tilejpgclicked), ContextCompat.getDrawable(this, R.drawable.tilejpg1), ContextCompat.getDrawable(this, R.drawable.tilejpg2), ContextCompat.getDrawable(this, R.drawable.tilejpg3), ContextCompat.getDrawable(this, R.drawable.tilejpg4), ContextCompat.getDrawable(this, R.drawable.tilejpg5), ContextCompat.getDrawable(this, R.drawable.tilejpg6), ContextCompat.getDrawable(this, R.drawable.tilejpg7), ContextCompat.getDrawable(this, R.drawable.tilejpg8), ContextCompat.getDrawable(this, R.drawable.tilebombexploded)};
@@ -157,6 +161,23 @@ public class MainActivityTwo extends Activity {
         // Ensure no padding in GridLayout
         gridLayout.setPadding(0, 0, 0, 0);
 
+        int[] randomNumbers = generateUniqueRandomNumbers(19, 0, 127);
+        Arrays.sort(randomNumbers);
+        // Print the generated array
+        for (int number : randomNumbers) {
+            Log.d("activityTwo", number + " ");
+        }
+
+        bombCounter = randomNumbers.length;
+        AtomicInteger flagcounter = new AtomicInteger(bombCounter);
+        if (flagcounter.get() < 10) {
+            flagTextView.setText("00" + flagcounter);
+        }
+        else if(flagcounter.get() < 100) {
+            flagTextView.setText("0" + flagcounter);
+        }
+        pressedTiles.set(pressedTiles.get() - bombCounter);
+
         flagbtn.setOnClickListener(v -> {
             if((int) flagbtn.getTag() == 0) {
                 flagbtn.setBackground(null);
@@ -176,15 +197,6 @@ public class MainActivityTwo extends Activity {
             startActivity(intent); // Start the activity again
         });
 
-        int[] randomNumbers = generateUniqueRandomNumbers(19, 0, 127);
-        Arrays.sort(randomNumbers);
-        // Print the generated array
-        for (int number : randomNumbers) {
-            Log.d("activityTwo", number + " ");
-        }
-
-        bombCounter = randomNumbers.length;
-        pressedTiles.set(pressedTiles.get() - bombCounter);
         // Set the total number of buttons
         for (int i = 0; i < 128; i++) {
             Button button = new Button(this);
@@ -222,10 +234,28 @@ public class MainActivityTwo extends Activity {
                     if((int) flagbtn.getTag() == 1) {
                         if(tags.pressed && backgroundCheck.getConstantState().equals(btn.getBackground().getConstantState())) {
                             btn.setBackground(ContextCompat.getDrawable(this, R.drawable.tilejpg));
+                            flagcounter.getAndIncrement();
+
+                            if (flagcounter.get() < 10) {
+                                flagTextView.setText("00" + flagcounter);
+                            }
+                            else if(flagcounter.get() < 100) {
+                                flagTextView.setText("0" + flagcounter);
+                            }
+
                             tags.pressed = false;
                         }
-                        else if(!tags.pressed && backgroundCheck2.getConstantState().equals(btn.getBackground().getConstantState())){
+                        else if(!tags.pressed && backgroundCheck2.getConstantState().equals(btn.getBackground().getConstantState()) && flagcounter.get() > 0){
                             btn.setBackground(ContextCompat.getDrawable(this, R.drawable.flag));
+                            flagcounter.getAndDecrement();
+
+                            if (flagcounter.get() < 10) {
+                                flagTextView.setText("00" + flagcounter);
+                            }
+                            else if(flagcounter.get() < 100) {
+                                flagTextView.setText("0" + flagcounter);
+                            }
+
                             tags.pressed = true;
                         }
                     }
