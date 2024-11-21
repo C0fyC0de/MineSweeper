@@ -1,6 +1,7 @@
 package com.example.sweepingit;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -135,8 +136,8 @@ public class MainActivityTwo extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitytwo_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         int bombCounter = 0;
-
         TextView flagTextView = findViewById(R.id.textView);
         TextView timeTextView = findViewById(R.id.textView2);
 
@@ -196,6 +197,30 @@ public class MainActivityTwo extends Activity {
             finish(); // Finish the current activity
             startActivity(intent); // Start the activity again
         });
+        AtomicInteger seconds = new AtomicInteger(0);
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(1000); // Wait for 1 second
+                    seconds.getAndIncrement(); // Increment the timer
+                    // Update the TextView on the UI thread
+                    if (seconds.get() < 10) {
+                        runOnUiThread(() -> timeTextView.setText("00" + seconds));
+                    }
+                    else if(seconds.get() < 100) {
+                        runOnUiThread(() -> timeTextView.setText("0" + seconds));
+                    }
+                    else {
+                        runOnUiThread(() -> timeTextView.setText("" + seconds));
+                    }
+                    if(seconds.get() > 998) {
+                        break;
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
         // Set the total number of buttons
         for (int i = 0; i < 128; i++) {
@@ -203,7 +228,7 @@ public class MainActivityTwo extends Activity {
             button.setTag(new ButtonData("N", i, i, false));
             for (int number : randomNumbers) {
                 if (i == number) {
-                    button.setText(String.valueOf("BOMB"));  // label buttons
+                    //button.setText(String.valueOf("BOMB"));  // label buttons
                     //button.setTag("BOMB");
                     button.setTag(new ButtonData("BOMB", 9, i, false));
                 }
