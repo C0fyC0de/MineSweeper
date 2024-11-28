@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.app.Activity;
@@ -132,11 +134,57 @@ public class MainActivityTwo extends Activity {
             }
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitytwo_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+
+
+
+        // Get screen dimensions
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int screenWidth = displayMetrics.widthPixels;
+        int screenHeight = displayMetrics.heightPixels;
+
+        // Calculate button size as a percentage of screen width
+        int buttonSize = (int) (screenWidth * 0.15); // 15% of screen width
+        float textSize = screenWidth * 0.02f;
+
+        // Find buttons and set their size
+        Button button3 = findViewById(R.id.button3);
+        Button button2 = findViewById(R.id.button2);
+        Button button4 = findViewById(R.id.button4);
+        TextView textView1 = findViewById(R.id.textView);
+        TextView textView2 = findViewById(R.id.textView2);
+
+        textView1.setHeight(buttonSize);
+        textView2.setHeight(buttonSize);
+        textView1.setTextSize(textSize);
+        textView2.setTextSize(textSize);
+
+        // Set the size for each button
+        ViewGroup.LayoutParams params3 = button3.getLayoutParams();
+        params3.width = buttonSize;
+        params3.height = buttonSize;
+        button3.setLayoutParams(params3);
+
+        ViewGroup.LayoutParams params2 = button2.getLayoutParams();
+        params2.width = buttonSize;
+        params2.height = buttonSize;
+        button2.setLayoutParams(params2);
+
+        ViewGroup.LayoutParams params4 = button4.getLayoutParams();
+        params4.width = buttonSize;
+        params4.height = buttonSize;
+        button4.setLayoutParams(params4);
+
+
+
+
+
         int bombCounter = 0;
         TextView flagTextView = findViewById(R.id.textView);
         TextView timeTextView = findViewById(R.id.textView2);
