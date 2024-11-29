@@ -1,3 +1,3 @@
 # Sweeper
 Mobile Version of a classic minesweeper game
-![ScreenshotActivityOne] (READMEresources/ScreenshotActivityOne.png)
+![ScreenshotActivityOne] (https://github.com/C0fyC0de/MineSweeper/blob/main/READMEresources/ScreenshotActivityOne.png)
